@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="choose_sex">
+        <item>男</item>
+        <item>女</item>
+        <!--<item>保密</item>-->
+    </string-array>
+    <string-array name="choose_picture">
+        <item>相册</item>
+        <item>相机</item>
+    </string-array>
+    <string-array name="choose_blood_type">
+        <item>A</item>
+        <item>B</item>
+        <item>AB</item>
+        <item>O</item>
+        <item>Rh</item>
+        <item>未知</item>
+    </string-array>
+
+    <string-array name="dangerous_permission_head">
+        <item name="calendar">日历</item>
+        <item name="camera">相机</item>
+        <item name="contacts">联系人</item>
+        <item name="location">定位</item>
+        <item name="microphone">录音</item>
+        <item name="phone">手机信息</item>
+        <item name="sensors">感应</item>
+        <item name="sms">短信</item>
+        <item name="storage">存储</item>
+    </string-array>
+
+    <array name="customCalendar_currentDay_bg_DashPath">
+        <item>8</item>
+        <item>8</item>
+        <item>8</item>
+        <item>4</item>
+        <item>4</item>
+        <item>4</item>
+    </array>
+</resources>

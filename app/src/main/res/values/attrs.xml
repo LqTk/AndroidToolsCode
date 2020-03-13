@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CalendarView">
+
+        <attr name="calendar_padding" format="dimension" /><!--日历内部左右padding-->
+
+        <attr name="month_view" format="color" /> <!--自定义类日历月视图路径-->
+        <attr name="week_view" format="string" /> <!--自定义类周视图路径-->
+        <attr name="week_bar_height" format="dimension" /> <!--星期栏的高度-->
+        <attr name="week_bar_view" format="color" /> <!--自定义类周栏路径，通过自定义则 week_text_color week_background xml设置无效，当仍可java api设置-->
+        <attr name="week_line_margin" format="dimension" /><!--线条margin-->
+
+        <attr name="week_line_background" format="color" /><!--线条颜色-->
+        <attr name="week_background" format="color" /> <!--星期栏的背景-->
+        <attr name="week_text_color" format="color" /> <!--星期栏文本颜色-->
+        <attr name="week_text_size" format="dimension" /><!--星期栏文本大小-->
+
+        <attr name="current_day_text_color" format="color" /> <!--今天的文本颜色-->
+        <attr name="current_day_lunar_text_color" format="color" /><!--今天的农历文本颜色-->
+
+        <attr name="calendar_height" format="string" /> <!--日历每项的高度，56dp-->
+        <attr name="day_text_size" format="string" /> <!--天数文本大小-->
+        <attr name="lunar_text_size" format="string" /> <!--农历文本大小-->
+
+        <attr name="scheme_text" format="string" /> <!--标记文本-->
+        <attr name="scheme_text_color" format="color" /> <!--标记文本颜色-->
+        <attr name="scheme_month_text_color" format="color" /> <!--标记天数文本颜色-->
+        <attr name="scheme_lunar_text_color" format="color" /> <!--标记农历文本颜色-->
+
+        <attr name="scheme_theme_color" format="color" /> <!--标记的颜色-->
+
+        <attr name="selected_theme_color" format="color" /> <!--选中颜色-->
+        <attr name="selected_text_color" format="color" /> <!--选中文本颜色-->
+        <attr name="selected_lunar_text_color" format="color" /> <!--选中农历文本颜色-->
+
+        <attr name="current_month_text_color" format="color" /> <!--当前月份的字体颜色-->
+        <attr name="other_month_text_color" format="color" /> <!--其它月份的字体颜色-->
+
+        <attr name="current_month_lunar_text_color" format="color" /> <!--当前月份农历节假日颜色-->
+        <attr name="other_month_lunar_text_color" format="color" /> <!--其它月份农历节假日颜色-->
+
+        <!-- 年视图相关 -->
+        <attr name="year_view_month_text_size" format="dimension" /> <!-- 年视图月份字体大小 -->
+        <attr name="year_view_day_text_size" format="dimension" /> <!-- 年视图月份日期字体大小 -->
+        <attr name="year_view_month_text_color" format="color" /> <!-- 年视图月份字体颜色 -->
+        <attr name="year_view_day_text_color" format="color" /> <!-- 年视图日期字体颜色 -->
+        <attr name="year_view_scheme_color" format="color" /> <!-- 年视图标记颜色 -->
+
+        <attr name="min_year" format="integer" />  <!--最小年份1900-->
+        <attr name="max_year" format="integer" />  <!--最大年份2099-->
+        <attr name="min_year_month" format="integer" /> <!--最小年份对应月份-->
+        <attr name="max_year_month" format="integer" /> <!--最大年份对应月份-->
+
+        <!--月视图是否可滚动-->
+        <attr name="month_view_scrollable" format="boolean" />
+        <!--周视图是否可滚动-->
+        <attr name="week_view_scrollable" format="boolean" />
+        <!--年视图是否可滚动-->
+        <attr name="year_view_scrollable" format="boolean" />
+
+        <!--配置你喜欢的月视图显示模式模式-->
+        <attr name="month_view_show_mode">
+            <enum name="mode_all" value="0" /> <!--全部显示-->
+            <enum name="mode_only_current" value="1" /> <!--仅显示当前月份-->
+            <enum name="mode_fix" value="2" /> <!--自适应显示，不会多出一行，但是会自动填充-->
+        </attr>
+
+        <!-- 自定义周起始 -->
+        <attr name="week_start_with">
+            <enum name="sun" value="1" />
+            <enum name="mon" value="2" />
+            <enum name="sat" value="7" />
+        </attr>
+
+        <!-- 自定义选择模式 -->
+        <attr name="select_mode">
+            <enum name="default_mode" value="0" />
+            <enum name="single_mode" value="1" />
+            <enum name="range_mode" value="2" />
+        </attr>
+
+        <!-- 当 select_mode=range_mode -->
+        <attr name="min_select_range" format="integer" />
+        <attr name="max_select_range" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="CalendarLayout">
+    <!-- 日历显示模式 -->
+    <attr name="calendar_show_mode">
+        <enum name="both_month_week_view" value="0" /><!-- 默认都有 -->
+        <enum name="only_week_view" value="1" /><!-- 仅周视图 -->
+        <enum name="only_month_view" value="2" /><!-- 仅月视图 -->
+    </attr>
+
+    <attr name="default_status">
+        <enum name="expand" value="0" /> <!--默认展开-->
+        <enum name="shrink" value="1" /><!--默认搜索-->
+    </attr>
+
+    <attr name="calendar_content_view_id" format="integer" /><!--内容布局id-->
+
+    </declare-styleable>
+    <declare-styleable name="RulerView">
+        <attr name="textColor" format="color" />
+        <attr name="textSize" format="dimension" />
+        <attr name="lineColor" format="color" />
+        <attr name="lineSpaceWidth" format="dimension" />
+        <attr name="lineWidth" format="dimension" />
+        <attr name="lineMaxHeight" format="dimension" />
+        <attr name="lineMidHeight" format="dimension" />
+        <attr name="lineMinHeight" format="dimension" />
+        <attr name="textMarginTop" format="dimension" />
+        <attr name="alphaEnable" format="boolean" />
+        <attr name="minValue" format="float" />
+        <attr name="maxValue" format="float" />
+        <attr name="selectorValue" format="float" />
+        <attr name="perValue" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="SelectSexView">
+        <attr name="background" format="reference"/>
+        <attr name="select_background" format="reference"/>
+        <attr name="default_head" format="reference"/>
+        <attr name="select_head" format="reference"/>
+        <attr name="head_sex" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="GifView">  
+    <attr name="gif" format="reference" />  
+    <attr name="paused" format="boolean" />  
+    </declare-styleable>
+    <declare-styleable name="CustomTheme">  
+    <attr name="gifViewStyle" format="reference"/>  
+    </declare-styleable>
+    <style name="Widget_GifView"></style>
+
+    <declare-styleable name="RefreshLoadMoreListView">
+        <attr name="headerView" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="DashLineView">
+        <attr name="line_color" format="color|reference"/>
+        <attr name="line_width" format="dimension"/>
+        <attr name="line_orientation" >
+            <enum name="horizontal" value="0"/>
+            <enum name="vertical" value="1"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension"/>
+        <attr name="border_color" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="SwipeFlingAdapterView">
+        <attr name="SwipeFlingStyle" format="reference"/>
+        <attr name="rotation_degrees" format="float"/>
+        <attr name="min_adapter_stack" format="integer"/>
+        <attr name="max_visible" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomCalendar">
+        <!--这四个颜色分别是月份、星期、日期、任务的背景色，只是方便调试测量时使用，正式试用时可配置透明色-->
+        <attr name="mBgMonth" format="color" />
+        <attr name="mBgWeek" format="color" />
+        <attr name="mBgDay" format="color" />
+        <attr name="mBgPre" format="color" />
+
+        <attr name="mTextColorMonth" format="color" />           <!--标题字体颜色-->
+        <attr name="mTextColorWeek" format="color" />            <!--星期字体颜色-->
+        <attr name="mSelectWeekTextColor" format="color" />      <!--当前星期字体颜色-->
+        <attr name="mTextColorDay" format="color" />             <!--日期字体颜色-->
+        <attr name="mTextTagColorDay" format="color" />             <!--日期字体标记颜色-->
+        <attr name="mTextColorPreFinish" format="color" />       <!--任务次数字体颜色-->
+        <attr name="mTextColorPreUnFinish" format="color" />
+        <attr name="mTextColorPreNull" format="color" />
+
+        <attr name="mTextSizeMonth" format="dimension" />        <!--标题字体大小-->
+        <attr name="mTextSizeWeek" format="dimension" />         <!--星期字体大小-->
+        <attr name="mTextSizeDay" format="dimension" />          <!--日期字体大小-->
+        <attr name="mTextSizePre" format="dimension" />          <!--任务次数字体大小-->
+
+        <attr name="mMonthRowL" format="reference" />            <!--月份箭头-->
+        <attr name="mMonthRowR" format="reference" />            <!--月份箭头-->
+        <attr name="mMonthRowSpac" format="dimension" />
+
+        <attr name="mSelectTextColor" format="color" />          <!--选中日期字体颜色-->
+        <attr name="mSelectBg" format="color" />                 <!--选中日期背景-->
+        <attr name="mSelectRadius" format="dimension" />         <!--选中日期背景半径-->
+        <attr name="mCurrentBg" format="color" />                <!--当天日期背景-->
+        <attr name="mCurrentBgStrokeWidth" format="dimension" /> <!--当天日期背景虚线宽度-->
+        <attr name="mCurrentBgDashPath" format="reference" />    <!--当天日期背景虚线数组-->
+
+        <attr name="mMonthSpac" format="dimension" />            <!--标题月份上下间隔-->
+        <attr name="mWeekSpac" format="dimension" />           <!--星期和日期间距-->
+        <attr name="mLineSpac" format="dimension" />             <!--日期行间距-->
+        <attr name="mTextSpac" format="dimension" />             <!--日期和任务次数字体上下间距-->
+        <attr name="mBottomSpac" format="dimension" />           <!--底部距离-->
+        <attr name="mLeftSpac" format="dimension" />           <!--左边距离-->
+        <attr name="mRightSpac" format="dimension" />           <!--右边距离-->
+
+    </declare-styleable>
+    <declare-styleable name="SwitchButton">
+        <attr format="reference" name="kswThumbDrawable"/>
+        <attr format="color|reference" name="kswThumbColor"/>
+        <attr format="dimension|reference" name="kswThumbMargin"/>
+        <attr format="dimension|reference" name="kswThumbMarginTop"/>
+        <attr format="dimension|reference" name="kswThumbMarginBottom"/>
+        <attr format="dimension|reference" name="kswThumbMarginLeft"/>
+        <attr format="dimension|reference" name="kswThumbMarginRight"/>
+        <attr format="dimension|reference" name="kswThumbWidth"/>
+        <attr format="dimension|reference" name="kswThumbHeight"/>
+        <attr format="dimension|reference" name="kswThumbRadius"/>
+        <attr format="dimension|reference" name="kswBackRadius"/>
+        <attr format="reference" name="kswBackDrawable"/>
+        <attr format="color|reference" name="kswBackColor"/>
+        <attr format="boolean" name="kswFadeBack"/>
+        <attr format="float" name="kswThumbRangeRatio"/>
+        <attr format="integer" name="kswAnimationDuration"/>
+        <attr format="color|reference" name="kswTintColor"/>
+        <attr format="string" name="kswTextOn"/>
+        <attr format="string" name="kswTextOff"/>
+        <attr format="dimension" name="kswTextThumbInset"/>
+        <attr format="dimension" name="kswTextExtra"/>
+        <attr format="dimension" name="kswTextAdjust"/>
+    </declare-styleable>
+    <declare-styleable name="PhoneNumberAutoComplete">
+        <attr name="colorOfData" format="color"/>
+        <attr name="colorOfNames" format="color"/>
+        <!--Caution: this property is overwritten by a bold text-->
+        <attr name="typedLettersHaveDifferentStyle" format="boolean"/>
+        <attr name="styleOfTypedLetters" format="enum">
+            <enum name="underlined" value="1"/>
+            <enum name="bold" value="2"/>
+        </attr>
+        <attr name="getTextPattern" format="string"/>
+        <attr name="displayPhotoIfAvailable" format="boolean"/>
+        <attr name="typeOfData" format="enum">
+            <enum name="phone" value="1"/>
+            <enum name="email" value="2"/>
+        </attr>
+    </declare-styleable>
+    <!--侧滑删除控件的配置-->
+    <declare-styleable name="SwipeMenuView">
+        <attr name="swipeEnable" format="boolean"/>
+        <attr name="ios" format="boolean"/>
+        <attr name="leftSwipe" format="boolean"/>
+    </declare-styleable>
+</resources>
