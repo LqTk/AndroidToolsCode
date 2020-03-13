@@ -1,19 +1,10 @@
-package com.org.androidtools.picture;
+package com.org.androidtools.pictureselector;
 
-import android.Manifest;
 import android.app.Activity;
-import android.util.Log;
-
-import androidx.annotation.RequiresPermission;
 
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
-import com.luck.picture.lib.entity.LocalMedia;
-import com.luck.picture.lib.listener.OnResultCallbackListener;
-import com.org.androidtools.R;
-
-import java.util.List;
 
 public class Pictures {
     //PhotoView 图片控件，可以使用PhotoView代替image view，图片可以放大缩小
