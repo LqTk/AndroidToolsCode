@@ -16,6 +16,7 @@ import com.org.androidtools.R;
 import java.util.List;
 
 public class Pictures {
+    //PhotoView 图片控件，可以使用PhotoView代替image view，图片可以放大缩小
     //拍照
     public static void takePhoto(Activity content){
         PictureSelector.create(content)
