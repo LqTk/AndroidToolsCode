@@ -1,10 +1,12 @@
 package com.org.androidtools;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +15,7 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.org.androidtools.entity.FileUploadResponseVo;
+import com.org.androidtools.myview.PressCircle;
 import com.org.androidtools.network.NetworkService;
 import com.org.androidtools.permission.Permissions;
 import com.org.androidtools.pictureselector.Pictures;
@@ -39,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
     Button btnTakepic;
     @BindView(R.id.btn_pic)
     Button btnPic;
+    @BindView(R.id.press_circle)
+    PressCircle pressCircle;
+    @BindView(R.id.tv_show)
+    TextView tvShow;
+    @BindView(R.id.tv_num)
+    TextView tvNum;
     private Unbinder unbinder;
     private NetworkService service;
 
@@ -52,7 +61,30 @@ public class MainActivity extends AppCompatActivity {
         rxPermissions = new RxPermissions(this);
         service = HttpMethod.getInstance().create(NetworkService.class);
 
+        initPressCircle();
 //        upLoadPic();
+    }
+
+    private void initPressCircle() {
+        pressCircle.setSeekBarChangeListener(new PressCircle.OnSeekChangeListener() {
+            @Override
+            public void onProgressChange(PressCircle view, float newProcess) {
+                double num1 = 10.0*newProcess/100;
+                double num2 = ((int)Math.ceil(num1*10))/10.0;
+                double num = ((int)10*newProcess/100*10)/10.0;
+                String format = String.format("%.1f", num);
+                tvNum.setText(num2+"");
+                if (num2>5.5){
+                    tvShow.setText("危险！");
+                    tvShow.setTextColor(Color.RED);
+                    pressCircle.setIsDangerous(true);
+                }else {
+                    tvShow.setTextColor(Color.BLACK);
+                    tvShow.setText("正常");
+                    pressCircle.setIsDangerous(false);
+                }
+            }
+        });
     }
 
     /**
@@ -101,11 +133,11 @@ public class MainActivity extends AppCompatActivity {
                         .subscribe(new Consumer<Boolean>() {
                             @Override
                             public void accept(Boolean aBoolean) throws Exception {
-                                Log.d("execting","222222222"+aBoolean);
-                                if (aBoolean){
+                                Log.d("execting", "222222222" + aBoolean);
+                                if (aBoolean) {
                                     Pictures.takePhoto(MainActivity.this);
-                                }else {
-                                    Toast.makeText(MainActivity.this,"权限请求失败",Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(MainActivity.this, "权限请求失败", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -170,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                         .subscribe(new Consumer<Boolean>() {
                             @Override
                             public void accept(Boolean aBoolean) throws Exception {
-                                if (aBoolean){
+                                if (aBoolean) {
                                     Pictures.selectPic(MainActivity.this);
                                 }
                             }
@@ -212,6 +244,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
