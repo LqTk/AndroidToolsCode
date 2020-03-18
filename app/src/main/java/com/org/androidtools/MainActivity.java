@@ -16,6 +16,7 @@ import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.org.androidtools.entity.FileUploadResponseVo;
 import com.org.androidtools.myview.PressCircle;
+import com.org.androidtools.myview.VerticalProgress;
 import com.org.androidtools.network.NetworkService;
 import com.org.androidtools.permission.Permissions;
 import com.org.androidtools.pictureselector.Pictures;
@@ -48,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
     TextView tvShow;
     @BindView(R.id.tv_num)
     TextView tvNum;
+    @BindView(R.id.tv_pro)
+    TextView tvPro;
+    @BindView(R.id.vertical_pro)
+    VerticalProgress verticalPro;
     private Unbinder unbinder;
     private NetworkService service;
 
@@ -62,23 +67,34 @@ public class MainActivity extends AppCompatActivity {
         service = HttpMethod.getInstance().create(NetworkService.class);
 
         initPressCircle();
+        initVerticalPro();
 //        upLoadPic();
+    }
+
+    private void initVerticalPro() {
+        verticalPro.setListener(new VerticalProgress.OnProgressChangeListener() {
+            @Override
+            public void progressOnChange(VerticalProgress verticalProgress, int progress) {
+                tvPro.setText("当前值："+progress);
+            }
+        });
+        verticalPro.setProgress(33);
     }
 
     private void initPressCircle() {
         pressCircle.setSeekBarChangeListener(new PressCircle.OnSeekChangeListener() {
             @Override
             public void onProgressChange(PressCircle view, float newProcess) {
-                double num1 = 10.0*newProcess/100;
-                double num2 = ((int)Math.ceil(num1*10))/10.0;
-                double num = ((int)10*newProcess/100*10)/10.0;
+                double num1 = 10.0 * newProcess / 100;
+                double num2 = ((int) Math.ceil(num1 * 10)) / 10.0;
+                double num = ((int) 10 * newProcess / 100 * 10) / 10.0;
                 String format = String.format("%.1f", num);
-                tvNum.setText(num2+"");
-                if (num2>5.5){
+                tvNum.setText(num2 + "");
+                if (num2 > 5.5) {
                     tvShow.setText("危险！");
                     tvShow.setTextColor(Color.RED);
                     pressCircle.setIsDangerous(true);
-                }else {
+                } else {
                     tvShow.setTextColor(Color.BLACK);
                     tvShow.setText("正常");
                     pressCircle.setIsDangerous(false);
