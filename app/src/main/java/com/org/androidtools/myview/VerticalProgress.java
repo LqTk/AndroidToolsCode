@@ -54,7 +54,7 @@ public class VerticalProgress extends View {
         inColor.setColor(Color.parseColor("#FF5555"));
         sizeColor = new Paint();
         sizeColor.setAntiAlias(true);
-        sizeColor.setColor(Color.parseColor("#FFFFFF"));
+        sizeColor.setColor(Color.parseColor("#00FFFFFF"));
     }
 
     public VerticalProgress(Context context) {
