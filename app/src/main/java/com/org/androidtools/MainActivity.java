@@ -1,11 +1,19 @@
 package com.org.androidtools;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Icon;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,10 +61,16 @@ public class MainActivity extends AppCompatActivity {
     TextView tvPro;
     @BindView(R.id.vertical_pro)
     VerticalProgress verticalPro;
+
     private Unbinder unbinder;
     private NetworkService service;
+    private NotificationManager notificationManager;
+    private Notification notification;
+    private Intent updateIntent;
+    private PendingIntent pendingIntent;
 
     RxPermissions rxPermissions;
+    private int notification_id=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +80,53 @@ public class MainActivity extends AppCompatActivity {
         rxPermissions = new RxPermissions(this);
         service = HttpMethod.getInstance().create(NetworkService.class);
 
+        createNotification();
         initPressCircle();
         initVerticalPro();
 //        upLoadPic();
+    }
+
+    //创建通知栏
+    RemoteViews contentView;
+    private void createNotification() {
+        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        contentView = new RemoteViews(getPackageName(),R.layout.notification_layout);
+
+        contentView.setTextViewText(R.id.tv_notification,"33");
+
+       /* notification = new Notification();
+        notification.icon = R.drawable.ic_launcher_background;
+        notification.tickerText = "当前值";
+        notification.contentView = contentView;*/
+        updateIntent = new Intent(this,MainActivity.class);
+        updateIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        pendingIntent = PendingIntent.getActivity(this,0,updateIntent,0);
+
+//        notification.contentIntent = pendingIntent;
+
+       /* updateIntent = new Intent(this,MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,notification_id,updateIntent,PendingIntent.FLAG_UPDATE_CURRENT);*/
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel("whatever", getPackageName(), NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(channel);
+            notification = new Notification.Builder(this,"whatever")
+                    .setSmallIcon(R.drawable.bg_button_gls)
+                    .setTicker("当前值")
+                    .setWhen(System.currentTimeMillis())
+                    .setContentIntent(pendingIntent)
+                    .setCustomContentView(contentView)
+                    .setChannelId(getPackageName())
+                    .build();
+        }else{
+            notification = new Notification.Builder(this)
+                    .setSmallIcon(R.drawable.bg_button_gls)
+                    .setTicker("当前值")
+                    .setWhen(System.currentTimeMillis())
+                    .setContentIntent(pendingIntent)
+                    .build();
+            notification.contentView = contentView;
+        }
+        notificationManager.notify(notification_id,notification);
     }
 
     private void initVerticalPro() {
@@ -76,6 +134,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void progressOnChange(VerticalProgress verticalProgress, int progress) {
                 tvPro.setText("当前值："+progress);
+                contentView = new RemoteViews(getPackageName(),R.layout.notification_layout);
+                contentView.setTextViewText(R.id.tv_notification,progress+"");
+                notification.contentView = contentView;
+                notificationManager.notify(notification_id,notification);
             }
         });
         verticalPro.setProgress(33);
