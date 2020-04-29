@@ -4,12 +4,15 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -85,6 +88,29 @@ public class MainActivity extends AppCompatActivity {
         initVerticalPro();
 //        upLoadPic();
     }
+    /**
+     * 判断当前应用是否开启NotificationListener监听权限
+     *
+     * @param context
+     * @return
+     */
+    private static boolean isAccessibilityEnabled(Context context) {
+
+        String notificationList = Settings.Secure.getString(context.getContentResolver(), "enabled_notification_listeners");
+        if (!TextUtils.isEmpty(notificationList)) {
+            final String[] names = notificationList.split(":");
+            for (final String name : names) {
+                ComponentName componentName = ComponentName.unflattenFromString(name);
+                if (componentName != null) {
+                    if (TextUtils.equals(componentName.getPackageName(), context.getPackageName())) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
 
     //创建通知栏
     RemoteViews contentView;
@@ -127,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
             notification.contentView = contentView;
         }
         notificationManager.notify(notification_id,notification);
+        Log.d("notificationendble",isAccessibilityEnabled(this)+"");
     }
 
     private void initVerticalPro() {
