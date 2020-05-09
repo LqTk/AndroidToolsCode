@@ -25,6 +25,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.org.androidtools.designmodel.builder.BuilderDes;
+import com.org.androidtools.designmodel.factory.Nokia5200;
+import com.org.androidtools.designmodel.factory.NokiaFactory;
+import com.org.androidtools.designmodel.factory.NokiaN97;
 import com.org.androidtools.entity.FileUploadResponseVo;
 import com.org.androidtools.myview.PressCircle;
 import com.org.androidtools.myview.VerticalProgress;
@@ -86,8 +90,30 @@ public class MainActivity extends AppCompatActivity {
         createNotification();
         initPressCircle();
         initVerticalPro();
+        test();
 //        upLoadPic();
     }
+
+    private void test() {
+        /**
+         * builder使用
+         */
+        BuilderDes.Builder builder = new BuilderDes.Builder();
+        builder.setID(1);
+        builder.setAge(23);
+        builder.setName("jack");
+        BuilderDes jack = builder.build();
+
+        /**
+         * 工厂模式使用
+         */
+        NokiaFactory nokiaFactory = new NokiaFactory();
+        Nokia5200 nokia5200 = nokiaFactory.createNokia(Nokia5200.class);
+        NokiaN97 nokiaN97 = nokiaFactory.createNokia(NokiaN97.class);
+        nokia5200.powerOnPhone();
+        nokiaN97.powerOnPhone();
+    }
+
     /**
      * 判断当前应用是否开启NotificationListener监听权限
      *
