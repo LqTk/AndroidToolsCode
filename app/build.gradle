@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat
+
 apply plugin: 'com.android.application'
 
 android {
@@ -16,6 +18,74 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    /**
+     * 签名配置
+     */
+    signingConfigs {
+        sign_chealth {
+            storeFile file('synwing.keystore')
+            storePassword 'synwing1103'
+            keyAlias 'synwing.keystore'
+            keyPassword 'synwing1103'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            debuggable = true
+            jniDebuggable = true
+
+            signingConfig signingConfigs.sign_chealth
+        }
+
+        sourceSets {
+            main {
+                jni.srcDirs = []
+            }
+        }
+    }
+
+    /**
+     * 多通道配置
+     */
+
+    flavorDimensions "company"
+    productFlavors {
+        chealth {
+            applicationId "com.synwing.healthv3"
+            versionCode 1
+            versionName "1.0.0"
+            resValue "string", "app_name", "TOOLS"
+            manifestPlaceholders = []
+            signingConfig signingConfigs.sign_chealth
+            dimension "company"
+        }
+    }
+
+    /**
+     * 修改输出文件名
+     */
+
+    //修改生成的apk名字
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            def appName = 'ChealthApp'
+            def versionCode = variant.versionCode
+            def versionName = variant.versionName
+            def time = '.' + getData()
+            def buildName
+            variant.productFlavors.each { product ->
+                buildName = product.name
+            }
+            outputFileName = "外网-" + appName + '-' + buildName + "-" + versionCode + '(1124)-' + versionName + time + '.apk'
+        }
+    }
+
+
     compileOptions {
 
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -23,6 +93,14 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
 
     }
+}
+
+//打包生成的时间
+def getData() {
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm")
+    Date date = new Date(System.currentTimeMillis())
+    String curDate = formatter.format(date)
+    return curDate
 }
 
 dependencies {
