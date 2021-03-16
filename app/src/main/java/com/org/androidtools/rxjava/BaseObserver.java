@@ -1,9 +1,11 @@
 package com.org.androidtools.rxjava;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.org.androidtools.network.BaseInfo;
+import com.org.androidtools.network.bean.ResultInfo;
 import com.org.androidtools.network.util.DateTimeUtil;
 import com.org.androidtools.network.util.GsonUtil;
 import com.org.androidtools.network.util.NetworkStatusManager;
@@ -45,11 +47,12 @@ public abstract class BaseObserver<T> implements Observer<T> {
     @Override
     public void onNext(T t) {
         String json = GsonUtil.objectToJson(t);
-        BaseInfo info = GsonUtil.fromJson(json,BaseInfo.class);
-        if (info.getResult().getStatus() == 1){
+        Log.d("json===",json);
+        ResultInfo info = GsonUtil.fromJson(json, ResultInfo.class);
+        if (info.getStatus() == 0){
             onSuccess(t);
         }else{
-            String msg = info.getResult().getMessage();
+            String msg = info.getMsg();
             onFailure(msg);
         }
     }

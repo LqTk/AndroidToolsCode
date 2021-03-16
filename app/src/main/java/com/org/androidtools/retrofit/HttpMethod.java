@@ -46,7 +46,7 @@ public class HttpMethod {
                     .hostnameVerifier(new SSLSocketFactoryUtils.TrustAllHostnameVerifier())
                     .readTimeout(5, TimeUnit.MINUTES)
                     .writeTimeout(5,TimeUnit.MINUTES)
-                    .connectTimeout(20, TimeUnit.SECONDS)
+                    .connectTimeout(60, TimeUnit.SECONDS)
                     .build();
         }
         return client;

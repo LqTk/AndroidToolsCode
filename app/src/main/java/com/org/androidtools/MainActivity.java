@@ -33,6 +33,9 @@ import com.org.androidtools.entity.FileUploadResponseVo;
 import com.org.androidtools.myview.PressCircle;
 import com.org.androidtools.myview.VerticalProgress;
 import com.org.androidtools.network.NetworkService;
+import com.org.androidtools.network.bean.RegisterEntity;
+import com.org.androidtools.network.bean.ResultInfo;
+import com.org.androidtools.network.util.NetworkStatusManager;
 import com.org.androidtools.permission.Permissions;
 import com.org.androidtools.pictureselector.Pictures;
 import com.org.androidtools.retrofit.HttpMethod;
@@ -41,6 +44,10 @@ import com.org.androidtools.rxjava.RxSchedulers;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -85,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         unbinder = ButterKnife.bind(this);
         rxPermissions = new RxPermissions(this);
+        NetworkStatusManager.init(this);
         service = HttpMethod.getInstance().create(NetworkService.class);
 
         createNotification();
@@ -92,6 +100,34 @@ public class MainActivity extends AppCompatActivity {
         initVerticalPro();
         test();
 //        upLoadPic();
+        login();
+    }
+
+
+    SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+    private void login() {
+        HashMap map = new HashMap();
+        map.put("username","android");
+        map.put("realname","525");
+        map.put("password","111");
+        map.put("email","1256954@qq.com");
+        map.put("phone","1256987546");
+        map.put("question","ddd");
+        map.put("answer","dwe");
+        map.put("role",1);
+        service.loginInfo(map)
+                .compose(RxSchedulers.compose(this))
+        .subscribe(new BaseObserver<RegisterEntity>(MainActivity.this) {
+            @Override
+            public void onSuccess(RegisterEntity resultInfo) {
+                Toast.makeText(MainActivity.this,"注册成功",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                Toast.makeText(MainActivity.this,"注册失败："+msg,Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void test() {

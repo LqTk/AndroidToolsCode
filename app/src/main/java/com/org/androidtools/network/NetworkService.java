@@ -1,16 +1,22 @@
 package com.org.androidtools.network;
 
 import com.org.androidtools.entity.FileUploadResponseVo;
+import com.org.androidtools.network.bean.RegisterEntity;
+import com.org.androidtools.network.bean.ResultInfo;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 
 public interface NetworkService {
-    public static String BaseUrl = "https://app-access.synwing.com:8443/health_app_v2/";
+    public static String BaseUrl = "http://192.168.2.174:8088";
 
     /**
      * 上传头像
@@ -24,4 +30,7 @@ public interface NetworkService {
     @Multipart
     @POST("platform/app/pic/uploadByUserId")
     Observable<FileUploadResponseVo> upLoadAvatar(@Part("userId") RequestBody userId, @Part("picType") RequestBody picType, @Part MultipartBody.Part part);
+
+    @POST("/seller/register")
+    Observable<RegisterEntity> loginInfo(@Body Map<String,String> user);
 }

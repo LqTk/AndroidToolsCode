@@ -7,29 +7,9 @@ import java.io.Serializable;
  */
 public class ResultInfo implements Serializable {
 
-    private int errorCode;
-
-    private String errorMessage;
-
     private int status;
 
-    private String message;
-
-    public int getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(int errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
+    private String msg;
 
     public int getStatus() {
         return status;
@@ -39,21 +19,11 @@ public class ResultInfo implements Serializable {
         this.status = status;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    @Override
-    public String toString() {
-        return "ResultInfo{" +
-                "errorCode=" + errorCode +
-                ", errorMessage='" + errorMessage + '\'' +
-                ", status=" + status +
-                ", message='" + message + '\'' +
-                '}';
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }
